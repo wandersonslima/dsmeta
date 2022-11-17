@@ -21,8 +21,10 @@ public class VendasService {
 	public Page<Vendas> buscaVendas(String minDate, String maxDate, Pageable pageable) {
 		
 		LocalDate today = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
+		LocalDate firstDayOfMonth = LocalDate.now().withDayOfMonth(1);
 		
-		LocalDate min = minDate.equals("") ? today.minusDays(365) : LocalDate.parse(minDate);
+		
+		LocalDate min = minDate.equals("") ? firstDayOfMonth : LocalDate.parse(minDate);
 		LocalDate max = maxDate.equals("") ? today : LocalDate.parse(maxDate);
 		
 		return repository.buscaVendas(min, max, pageable);
