@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Sale } from "../../models/sale";
+import { BASE_URL } from "../../utils/request";
 
 function SalesCard() {
   const d = new Date();
@@ -19,10 +20,15 @@ function SalesCard() {
   const [sales, setSales] = useState<Sale[]>([]);
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:8080/vendas").then((response) => {
-      setSales(response.data.content);
-    });
-  }, []);
+    const dmin = minDate.toISOString().slice(0, 10);
+    const dmax = maxDate.toISOString().slice(0, 10);
+
+    axios
+      .get(`${BASE_URL}/vendas?minDate=${dmin}&maxDate=${dmax}`)
+      .then((response) => {
+        setSales(response.data.content);
+      });
+  }, [minDate, maxDate]);
 
   return (
     <div className="dsmeta-card">
