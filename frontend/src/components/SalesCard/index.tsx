@@ -24,7 +24,7 @@ function SalesCard() {
     const dmax = maxDate.toISOString().slice(0, 10);
 
     axios
-      .get(`https://dsmeta-wan.herokuapp.com/vendas?minDate=${dmin}&maxDate=${dmax}`)
+      .get(`${BASE_URL}/vendas?minDate=${dmin}&maxDate=${dmax}`)
       .then((response) => {
         setSales(response.data.content);
       });
